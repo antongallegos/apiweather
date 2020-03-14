@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <style type="text/css">
+    
+    #1,#2,#3,{
+        display: block;
+    }
+        
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#button').click(function() {
+                // your code here (build up your url)
+                let i = $('input:text').val();
+                $.get("http://api.openweathermap.org/data/2.5/weather?q="+i+"&appid=9cf98ec971ede870f98f87f16ef2a3e0", function(res) {
+                    // your code here
+                    //let value ="<h1>"+res.coord.lon+"</h1>";
+                    $('#longitud').attr('value',res.coord.lon);
+                    $('#latitud').attr('value',res.coord.lat);
+                    let temper=(parseFloat(Math.round((res.main.temp-273.15) * 100) / 100).toFixed(2));
+                    $('#temperatura').attr('value',temper);
+                    //document.getElementById('#longitud').value;
+                    console.log(res);
+                }, 'json');
+        // don't forget to return false so the page doesn't refresh
+            return false;
+    })
+});
+    </script>
+</head>
+<body>
+<h1>City's Weather</h1>
+<form id="weather" action="html">
+    <label for="city">City: </label><input type="text" id="city" name="city">
+    <input id="button" type="submit" value="Submit Query">
+</form>
+<div id="info">
+<h2>Resultado: </h2>
+<table>
+    <tr>
+        <td><div id="1"><label for="longitud">Longitud: </label></td>
+        <td><input type="text" id="longitud" name="longitud" readonly></div></td>
+    </tr>
+    <tr>
+        <td><div id="2"><label for="latitud">Latitud: </label></td>   
+        <td><input type="text" id="latitud" name="latitud" readonly></div></td>
+    </tr>
+    <tr>
+        <td><div id="3"><label for="temperatura">Temperatura: </label></td>
+        <td><input type="text" id="temperatura" name="temperatura" readonly></div></td>
+    </tr>
+</table>
+</div>
+<p></p>
+    
+    
+</body>
+</html>
